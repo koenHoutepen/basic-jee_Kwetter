@@ -15,5 +15,5 @@ public class PingResource {
 
     @GET
     @Path("bleep")
-    public String bleep(){return "zelfgemaakt link!";}
+    public String bleep(){return "zelfgemaakte link!";}
 }
