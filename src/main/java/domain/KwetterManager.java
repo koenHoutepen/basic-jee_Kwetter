@@ -5,16 +5,20 @@ import java.util.Date;
 import java.util.List;
 
 public class KwetterManager {
-    private List<Profile> profiles;
-    private List<Mention> mentions;
-    private List<Trend> trends;
-    private List<Kweet> kweets;
+    private List<Profile> profiles = new ArrayList<>();
+    private List<Mention> mentions = new ArrayList<>();
+    private List<Trend> trends = new ArrayList<>();
+    private List<Kweet> kweets = new ArrayList<>();
 
     public KwetterManager(List<Profile> profiles, List<Mention> mentions, List<Trend> trends,List<Kweet> kweets) {
         this.profiles = profiles;
         this.mentions = mentions;
         this.trends = trends;
         this.kweets = kweets;
+    }
+
+    KwetterManager() {
+
     }
 
     public Kweet CreeerKweet(Profile posterProfile, String message) {
@@ -44,15 +48,27 @@ public class KwetterManager {
         //implement
     }
 
+    public Boolean UsernameTaken(String newUsername)
+    {
+        for (Profile checkProfile:profiles )
+        {
+            if(newUsername.equals(checkProfile.getUsername()))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public List<Kweet> ReturnOwnedKweets(Profile profile)
     {
         List<Kweet> mykweets = new ArrayList<>();
         String checkedName = profile.getUsername();
-        for (Kweet kweet:kweets )
+        for (Profile checkProfile:profiles )
         {
-            if(checkedName.equals(kweet.getOwner()))
+            if(checkedName.equals(checkProfile.getUsername()))
             {
-                mykweets.add(kweet);
+                mykweets = checkProfile.getKweets();
             }
         }
         return mykweets;
