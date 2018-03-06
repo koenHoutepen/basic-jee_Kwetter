@@ -1,10 +1,11 @@
-package domain;
+package controller.domain;
 
 import java.security.InvalidParameterException;
 import java.util.Date;
 import java.util.List;
 
 public class Kweet {
+    private Long kweetId;
     private String owner;
     private String message;
     private Date postDate;
@@ -12,7 +13,7 @@ public class Kweet {
     private List<String> mentions;
     private List<String> trends;
 
-    public Kweet(String owner, String message, Date postDate, List<String> likes, List<String> mentions, List<String> trends) {
+    public Kweet(Long kweetId,String owner, String message, Date postDate, List<String> likes, List<String> mentions, List<String> trends) {
         if (owner.isEmpty()) {
             throw new InvalidParameterException("username has to be entered");
         }
@@ -22,6 +23,7 @@ public class Kweet {
         if(mentions == null || trends == null || likes == null){
             throw new InvalidParameterException("Kweet creation failed");
         }
+        this.kweetId = kweetId;
         this.owner = owner;
         this.message = message;
         this.postDate = postDate;
@@ -78,5 +80,11 @@ public class Kweet {
         this.trends = trends;
     }
 
+    public Long getKweetId() {
+        return kweetId;
+    }
 
+    public void setKweetId(Long kweetId) {
+        this.kweetId = kweetId;
+    }
 }

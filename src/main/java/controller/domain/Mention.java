@@ -1,4 +1,4 @@
-package domain;
+package controller.domain;
 
 public class Mention {
     private Profile profile;

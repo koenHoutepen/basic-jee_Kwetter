@@ -1,4 +1,4 @@
-package domain;
+package controller.domain;
 
 public class Role {
     private boolean canDelete;

@@ -1,4 +1,4 @@
-package domain;
+package controller.domain;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -21,12 +21,12 @@ public class KwetterManager {
 
     }
 
-    public Kweet CreeerKweet(Profile posterProfile, String message) {
-        String userName = posterProfile.getUsername();
-        Date createDate = new Date();
-        List<String> fillList = new ArrayList<>();
-        return new Kweet(userName, message, createDate, fillList, fillList, fillList);
-    }
+//    public Kweet CreeerKweet(Profile posterProfile, String message) {
+//        String userName = posterProfile.getUsername();
+//        Date createDate = new Date();
+//        List<String> fillList = new ArrayList<>();
+//        return new Kweet(userName, message, createDate, fillList, fillList, fillList);
+//    }
 
     public void AddKweet(Kweet kweet)
     {
