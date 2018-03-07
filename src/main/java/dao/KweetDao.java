@@ -14,5 +14,13 @@ public interface KweetDao {
 
     List<Kweet> findAll();
 
-    Kweet find(Long id);
+    Kweet findKweet(Long id);
+
+    List<Kweet> get10UserKweets(String Username);
+
+    List<Kweet> getUserKweets(String Username);
+
+    List<Kweet> getKweetsByMention(String mention);
+
+    List<Kweet> getKweetsByTrend(String trend);
 }

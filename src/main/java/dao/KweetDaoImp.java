@@ -40,7 +40,7 @@ public class KweetDaoImp implements KweetDao {
     @Override
     public Kweet create(Kweet k) {
         if (k == null) {
-            throw new IllegalArgumentException("Posting is null");
+            throw new IllegalArgumentException("Kweet is null");
         }
         k.setKweetId(nextId.getAndIncrement());
         kweets.put(k.getKweetId(), k);
@@ -78,10 +78,27 @@ public class KweetDaoImp implements KweetDao {
     }
 
     @Override
-    public Kweet find(Long id) {
-        if (!kweets.containsKey(id)) {
-            throw new IllegalArgumentException("Id not found: " + id);
-        }
-        return kweets.get(id);
+    public Kweet findKweet(Long id) {
+        return null;
+    }
+
+    @Override
+    public List<Kweet> get10UserKweets(String Username) {
+        return null;
+    }
+
+    @Override
+    public List<Kweet> getUserKweets(String Username) {
+        return null;
+    }
+
+    @Override
+    public List<Kweet> getKweetsByMention(String mention) {
+        return null;
+    }
+
+    @Override
+    public List<Kweet> getKweetsByTrend(String trend) {
+        return null;
     }
 }
