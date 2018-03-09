@@ -1,6 +1,7 @@
 package controller.domain;
 
 import java.security.InvalidParameterException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -30,6 +31,23 @@ public class Kweet {
         this.likes = likes;
         this.mentions = mentions;
         this.trends = trends;
+    }
+
+    public Kweet(Long Kweetid, String owner, String message, Date date) {
+        if (owner.isEmpty()) {
+            throw new InvalidParameterException("username has to be entered");
+        }
+        if (message.isEmpty() || message.length() > 140) {
+            throw new InvalidParameterException("message is invalid");
+        }
+
+        this.kweetId = kweetId;
+        this.owner = owner;
+        this.message = message;
+        this.postDate = date;
+        this.likes = new ArrayList<>();
+        this.mentions = new ArrayList<>();
+        this.trends = new ArrayList<>();
     }
 
     public String getOwner() {

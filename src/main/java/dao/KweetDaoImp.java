@@ -7,17 +7,19 @@ package dao;
 import controller.domain.Kweet;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
 public class KweetDaoImp implements KweetDao {
 
     private static KweetDaoImp instance = null;
-    private ConcurrentHashMap<Long, Kweet> kweets;
+    private Map<Long, Kweet> kweets;
     private AtomicLong nextId = new AtomicLong(0L);
 
-    public static synchronized KweetDao getPostingDao() {
+    public static synchronized KweetDao getKweetDao() {
         if (instance == null) {
             instance = new KweetDaoImp();
         }
@@ -26,13 +28,13 @@ public class KweetDaoImp implements KweetDao {
     }
 
     private KweetDaoImp() {
-        this.initWebBlog();
+        this.initKwetter();
     }
 
-    public void initWebBlog() {
+    public void initKwetter() {
         kweets = new ConcurrentHashMap<>();
 
-        //create(new Kweet("Student 1", "Title 1", "Content 1"));
+        create(new Kweet(new Long(0),"kweet 1","welkom bij kwetter" ,new Date()));
         //create(new Kweet("Student 1", "Title 2", "Content 2"));
         //create(new Kweet("Student 1", "Title 3", "Content 3"));
     }
@@ -83,12 +85,21 @@ public class KweetDaoImp implements KweetDao {
     }
 
     @Override
-    public List<Kweet> get10UserKweets(String Username) {
-        return null;
+    public List<Kweet> get10UserKweets(String username) {
+        List<Kweet> list = new ArrayList<>();
+        int limit = 10;
+        for (Map.Entry<Long, Kweet> longKweetEntry : kweets.entrySet()) {
+            if (longKweetEntry.getValue().getOwner().equals(username)) {
+                Kweet value = longKweetEntry.getValue();
+                if (limit-- == 0) break;
+                list.add(value);
+            }
+        }
+        return list;
     }
 
     @Override
-    public List<Kweet> getUserKweets(String Username) {
+    public List<Kweet> getUserKweets(String username) {
         return null;
     }
 
