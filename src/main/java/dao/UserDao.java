@@ -8,10 +8,16 @@ import org.omg.CosNaming.NamingContextPackage.NotFound;
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public interface UserDao
 {
+
     List<Profile> getProfiles();
+
+    Map<String,Profile> getMappedProfiles();
+
+    Profile getMappedProfile(String username) throws Exception;
 
     Profile getProfile(String userName) throws Exception;
 
@@ -20,13 +26,6 @@ public interface UserDao
     void addProfile(Profile profile);
 
     void addKweets(Kweet kweet, Profile profile) throws Exception;
-
-    default Profile createUserProfile(
-            String username,
-            String password) throws InvalidParameterException
-    {return createUserProfile(username, password);}
-
-    Profile createProfile(String username, String password);
 
     List<Kweet> getKweets(Profile profile);
 }

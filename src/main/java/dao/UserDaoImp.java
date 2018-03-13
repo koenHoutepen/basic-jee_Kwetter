@@ -10,24 +10,40 @@ import javax.enterprise.inject.Default;
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 @ApplicationScoped
 @Default
 public class UserDaoImp implements UserDao
 {
+    private Map<String,Profile> mappedprofiles;
     private List<Profile> profiles;
 
     @PostConstruct
     public void init()
     {
         profiles = new ArrayList<>();
-        // users toevoegen
+        mappedprofiles = new ConcurrentHashMap<>();
     }
 
     @Override
     public List<Profile> getProfiles()
     {
-        return new ArrayList<Profile>(profiles);
+        return new ArrayList<>(profiles);
+    }
+
+    @Override
+    public Map<String, Profile> getMappedProfiles() {
+        return mappedprofiles;
+    }
+
+    @Override
+    public Profile getMappedProfile(String username) throws Exception {
+        if(mappedprofiles.containsKey(username)) {
+            return mappedprofiles.get(username);
+        }
+        throw new Exception("User" + username + "does not exist or could not be found");
     }
 
 
@@ -55,16 +71,6 @@ public class UserDaoImp implements UserDao
     @Override
     public void addKweets(Kweet kweet, Profile profile) throws Exception {
         this.getProfile(profile.getUsername()).addKweet(kweet);
-    }
-
-    @Override
-    public Profile createUserProfile(String username, String password) throws InvalidParameterException {
-        return null;
-    }
-
-    @Override
-    public Profile createProfile(String username, String password) {
-        return null;
     }
 
     @Override

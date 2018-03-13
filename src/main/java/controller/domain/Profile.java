@@ -2,6 +2,7 @@ package controller.domain;
 
 import java.security.InvalidParameterException;
 import java.util.List;
+import java.util.Objects;
 
 public class Profile {
     private String username;
@@ -105,4 +106,25 @@ public class Profile {
         this.profilePicturePath = profilePicturePath;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Profile profile = (Profile) o;
+        return Objects.equals(username, profile.username) &&
+                Objects.equals(bio, profile.bio) &&
+                Objects.equals(location, profile.location) &&
+                Objects.equals(web, profile.web) &&
+                Objects.equals(kweets, profile.kweets) &&
+                Objects.equals(followers, profile.followers) &&
+                Objects.equals(following, profile.following) &&
+                Objects.equals(profilePicturePath, profile.profilePicturePath) &&
+                Objects.equals(kwetterManager, profile.kwetterManager);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(username, bio, location, web, kweets, followers, following, profilePicturePath, kwetterManager);
+    }
 }

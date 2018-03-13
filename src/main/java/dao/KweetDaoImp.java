@@ -34,7 +34,7 @@ public class KweetDaoImp implements KweetDao {
     public void initKwetter() {
         kweets = new ConcurrentHashMap<>();
 
-        create(new Kweet(new Long(0),"kweet 1","welkom bij kwetter" ,new Date()));
+        create(new Kweet(new Long(0),"de kweetmeister","welkom bij kwetter" ,new Date()));
         //create(new Kweet("Student 1", "Title 2", "Content 2"));
         //create(new Kweet("Student 1", "Title 3", "Content 3"));
     }
