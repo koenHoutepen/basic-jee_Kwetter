@@ -36,6 +36,11 @@ public class Profile {
         this.profilePicturePath = profilePicturePath;
     }
 
+    public void addKweet(Kweet kweet)
+    {
+        this.kweets.add(kweet);
+    }
+
     public List<Kweet> getKweets() {
         return kweets;
     }
