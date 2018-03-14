@@ -8,6 +8,7 @@ import dao.UserDao;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import java.util.List;
+import java.util.Map;
 
 @Stateless
 public class ProfileService {
@@ -16,6 +17,16 @@ public class ProfileService {
 
     public Profile getProfile(String profileName) throws Exception {
         return this.userDao.getProfile(profileName);
+    }
+
+    public Profile getMappedProfile(String profileName) throws Exception
+    {
+        return this.userDao.getMappedProfile(profileName);
+    }
+
+    public Map<String,Profile> getProfileMap()
+    {
+        return this.userDao.getMappedProfiles();
     }
 
     public List<Profile> getProfiles()

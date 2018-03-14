@@ -34,13 +34,13 @@ public class KweetDaoImp implements KweetDao {
     public void initKwetter() {
         kweets = new ConcurrentHashMap<>();
 
-        create(new Kweet(new Long(0),"de kweetmeister","welkom bij kwetter" ,new Date()));
+        createKweet(new Kweet(new Long(0),"de kweetmeister","welkom bij kwetter" ,new Date()));
         //create(new Kweet("Student 1", "Title 2", "Content 2"));
         //create(new Kweet("Student 1", "Title 3", "Content 3"));
     }
 
     @Override
-    public Kweet create(Kweet k) {
+    public Kweet createKweet(Kweet k) {
         if (k == null) {
             throw new IllegalArgumentException("Kweet is null");
         }
@@ -50,7 +50,7 @@ public class KweetDaoImp implements KweetDao {
     }
 
     @Override
-    public Kweet edit(Long id, String author, String message) {
+    public Kweet editKweet(Long id, String author, String message) {
         if (author == null || message == null) {
             throw new IllegalArgumentException("Author, Title or Content is null");
         }
@@ -66,7 +66,7 @@ public class KweetDaoImp implements KweetDao {
     }
 
     @Override
-    public void delete(Long id) {
+    public void deleteKweet(Long id) {
         if (!kweets.containsKey(id)) {
             throw new IllegalArgumentException("Id not found: " + id);
         }
@@ -75,12 +75,12 @@ public class KweetDaoImp implements KweetDao {
     }
 
     @Override
-    public List<Kweet> findAll() {
-        return new ArrayList(kweets.values());
+    public Map<Long,Kweet> getAllKweets() {
+        return kweets;
     }
 
     @Override
-    public Kweet findKweet(Long id) {
+    public Kweet getKweet(Long id) {
         return null;
     }
 

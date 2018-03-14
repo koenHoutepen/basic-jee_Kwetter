@@ -10,6 +10,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import java.util.List;
+import java.util.Map;
 
 @Path("profiles")
 public class ProfileResource {
@@ -28,10 +29,16 @@ public class ProfileResource {
     }
 
     @GET
+    @Path("map")
+    public Map<String , Profile> getCompleteMap()
+    {
+       return this.service.getProfileMap();
+    }
+
+    @GET
     @Path("{name}")
     @Produces({"application/json"})
     public Profile getProfile(@PathParam("name") String name) throws Exception {
-        Profile profile = this.service.getProfile(name);
-        return profile;
+        return this.service.getMappedProfile(name);
     }
 }

@@ -3,18 +3,19 @@ package dao;
 import controller.domain.Kweet;
 
 import java.util.List;
+import java.util.Map;
 
 public interface KweetDao {
 
-    Kweet create(Kweet k);
+    Kweet createKweet(Kweet k);
     
-    Kweet edit(Long id, String author, String title);
+    Kweet editKweet(Long id, String author, String title);
     
-    void delete(Long id);
+    void deleteKweet(Long id);
 
-    List<Kweet> findAll();
+    Map<Long,Kweet> getAllKweets();
 
-    Kweet findKweet(Long id);
+    Kweet getKweet(Long id);
 
     List<Kweet> get10UserKweets(String Username);
 
