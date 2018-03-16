@@ -16,33 +16,28 @@ public class ProfileResource {
     @Inject
     ProfileService service;
 
-    public ProfileResource()
-    {
-
-    }
-
     @GET
-    @Path("list")
+    @Path("/list")
     public List<Profile> getAll() {
         return this.service.getProfiles();
     }
 
     @GET
-    @Path("map")
+    @Path("/map")
     public Map<String , Profile> getCompleteMap()
     {
        return this.service.getProfileMap();
     }
 
     @GET
-    @Path("{name}")
+    @Path("/{name}")
     @Produces({"application/json"})
     public Profile getProfile(@PathParam("name") String name) throws Exception {
         return this.service.getMappedProfile(name);
     }
 
     @POST
-    @Path("profilePost")
+    @Path("/profilePost")
     @Produces({MediaType.APPLICATION_JSON, MediaType.TEXT_HTML})
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addProfile(Profile profile)
@@ -64,25 +59,47 @@ public class ProfileResource {
                 .build();
     }
 
+//    @DELETE
+//    @Path("/profileDelete")
+//    @Produces({MediaType.APPLICATION_JSON, MediaType.TEXT_HTML})
+//    @Consumes(MediaType.APPLICATION_JSON)
+//    public Response deleteProfile(Profile profile)
+//    {
+////        try
+////        {
+////            service.deleteProfile(profile);
+////        }
+////        catch (Exception e)
+////        {
+////            return Response.status(Response.Status.NOT_FOUND)
+////                    .entity("User doesn't exists")
+////                    .type(MediaType.TEXT_HTML)
+////                    .build();
+////        }
+//
+//        return Response.ok("Ik kom in delete")
+//                .build();
+//    }
+
     @DELETE
-    @Path("profileDelete")
+    @Path("/profileDelete/{username}")
     @Produces({MediaType.APPLICATION_JSON, MediaType.TEXT_HTML})
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response deleteProfile(Profile profile)
-    {
+    public Response deleteProfileByUsername(@PathParam("username") String username) {
         try
         {
-            service.deleteProfile(profile);
+            Profile deleteProfile = service.getMappedProfile(username);
+            service.deleteProfile(deleteProfile);
         }
         catch (Exception e)
         {
             return Response.status(Response.Status.NOT_FOUND)
-                    .entity("User doesn't exists")
+                    .entity("User doesn't exists or " + e.getMessage())
                     .type(MediaType.TEXT_HTML)
                     .build();
         }
 
-        return Response.ok(profile.getUsername())
+        return Response.ok("profiel: " + username + " verwijdert")
                 .build();
     }
+
 }

@@ -39,7 +39,7 @@ public class ProfileService {
 
     public void addProfile(Profile profile){this.userDao.addProfile(profile);}
 
-    public void deleteProfile(Profile profile) throws Exception {this.userDao.deleteProfile(profile.getUsername());}
+    public void deleteProfile(Profile deleteProfile) throws Exception {this.userDao.deleteProfile(deleteProfile.getUsername());}
 
     public void addKweet(Kweet kweet, Profile profile) throws Exception
     {

@@ -12,52 +12,41 @@ import javax.ws.rs.core.Response;
 import java.util.List;
 import java.util.Map;
 
-@Path("kweets")
+@Path("/kweets")
 public class KweetResource {
     @Inject
     KweetService service;
     @Inject
     ProfileService profileService;
 
-    public KweetResource()
-    {
-
-    }
-
     @GET
-    @Path("map")
-    public Map<Long , Kweet> getCompleteMap()
-    {
+    @Path("/map")
+    public Map<Long, Kweet> getCompleteMap() {
         return this.service.getKweetMap();
     }
 
     @GET
-    @Path("list")
-    public List<Kweet> getCompleteList()
-    {
+    @Path("/list")
+    public List<Kweet> getCompleteList() {
         return this.service.getKweetList();
     }
 
     @GET
-    @Path("{id}")
+    @Path("/{id}")
     @Produces({"application/json"})
     public Kweet getKweet(@PathParam("id") Long id) throws Exception {
         return this.service.getKweet(id);
     }
 
     @POST
-    @Path("kweetPost")
+    @Path("/kweetPost")
     @Produces({MediaType.APPLICATION_JSON, MediaType.TEXT_HTML})
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response addKweet(Kweet kweet)
-    {
+    public Response addKweet(Kweet kweet) {
 
-        try
-        {
+        try {
             profileService.addKweet(kweet, profileService.getMappedProfile(kweet.getOwner()));
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             return Response.status(Response.Status.NOT_FOUND)
                     .entity("User doesn't exists")
                     .type(MediaType.TEXT_HTML)
@@ -68,25 +57,40 @@ public class KweetResource {
                 .build();
     }
 
+//    @DELETE
+//    @Path("/kweetDelete")
+//    @Produces({MediaType.APPLICATION_JSON, MediaType.TEXT_HTML})
+//    @Consumes(MediaType.APPLICATION_JSON)
+//    public Response deleteKweet(Kweet kweet)
+//    {
+////        try {
+////            service.deleteKweet(kweet.getKweetId());
+////        } catch (Exception e) {
+////            return Response.status(Response.Status.NOT_FOUND)
+////                    .entity("User doesn't exists")
+////                    .type(MediaType.TEXT_HTML)
+////                    .build();
+////        }
+//
+//        return Response.ok("kweet verwijdert kom ik in " + kweet.getKweetId())
+//                .build();
+//    }
+
     @DELETE
-    @Path("kweetDelete")
+    @Path("/kweetDelete/{id}")
     @Produces({MediaType.APPLICATION_JSON, MediaType.TEXT_HTML})
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response deleteKweet(Kweet kweet)
-    {
-        try
-        {
-            service.deleteKweet(kweet.getKweetId());
-        }
-        catch (Exception e)
-        {
+    public Response deleteKweetById(@PathParam("id") Long id) {
+        try {
+            service.deleteKweet(id);
+        } catch (Exception e) {
             return Response.status(Response.Status.NOT_FOUND)
                     .entity("User doesn't exists")
                     .type(MediaType.TEXT_HTML)
                     .build();
         }
 
-        return Response.ok("kweet verwijdert")
+        return Response.ok("kweet verwijdert: " + id)
                 .build();
     }
+
 }
