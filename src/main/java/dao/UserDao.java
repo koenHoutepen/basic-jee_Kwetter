@@ -25,7 +25,9 @@ public interface UserDao
 
     void addProfile(Profile profile);
 
+    void deleteProfile(String username) throws Exception;
+
     void addKweets(Kweet kweet, Profile profile) throws Exception;
 
-    List<Kweet> getKweets(Profile profile);
+    Map<Long,Kweet> getKweets(Profile profile);
 }

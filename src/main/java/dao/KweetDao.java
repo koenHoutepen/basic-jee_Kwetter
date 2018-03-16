@@ -7,13 +7,15 @@ import java.util.Map;
 
 public interface KweetDao {
 
-    Kweet createKweet(Kweet k);
+    Kweet createKweet(Kweet kweet) throws Exception;
     
     Kweet editKweet(Long id, String author, String title);
     
     void deleteKweet(Long id);
 
     Map<Long,Kweet> getAllKweets();
+
+    List<Kweet> getKweetList();
 
     Kweet getKweet(Long id);
 

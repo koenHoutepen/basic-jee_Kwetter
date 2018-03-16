@@ -60,19 +60,19 @@ public class KwetterManager {
         return false;
     }
 
-    public List<Kweet> ReturnOwnedKweets(Profile profile)
-    {
-        List<Kweet> mykweets = new ArrayList<>();
-        String checkedName = profile.getUsername();
-        for (Profile checkProfile:profiles )
-        {
-            if(checkedName.equals(checkProfile.getUsername()))
-            {
-                mykweets = checkProfile.getKweets();
-            }
-        }
-        return mykweets;
-    }
+//    public List<Kweet> ReturnOwnedKweets(Profile profile)
+//    {
+//        List<Kweet> mykweets = new ArrayList<>();
+//        String checkedName = profile.getUsername();
+//        for (Profile checkProfile:profiles )
+//        {
+//            if(checkedName.equals(checkProfile.getUsername()))
+//            {
+//                mykweets = checkProfile.getKweets();
+//            }
+//        }
+//        return mykweets;
+//    }
     
     public Boolean haveLiked(Kweet kweet,Profile profile)
     {

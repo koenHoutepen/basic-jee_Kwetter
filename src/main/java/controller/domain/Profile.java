@@ -1,21 +1,24 @@
 package controller.domain;
 
+import javax.xml.bind.annotation.XmlRootElement;
 import java.security.InvalidParameterException;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
+@XmlRootElement
 public class Profile {
     private String username;
     private String bio;
     private String location;
     private String web;
-    private List<Kweet> kweets;
+    private Map<Long,Kweet> kweets;
     private List<String> followers;
     private List<String> following;
     private String profilePicturePath;
     private KwetterManager kwetterManager = new KwetterManager();
 
-    public Profile(String username, String bio, String location, String web, List<Kweet> kweets, List<String> followers, List<String> following, String profilePicturePath) {
+    public Profile(String username, String bio, String location, String web, Map<Long,Kweet> kweets, List<String> followers, List<String> following, String profilePicturePath) {
         if (username.isEmpty() || kwetterManager.UsernameTaken(username))
         {
             throw new InvalidParameterException("username was empty or already taken");
@@ -37,16 +40,21 @@ public class Profile {
         this.profilePicturePath = profilePicturePath;
     }
 
-    public void addKweet(Kweet kweet)
+    public Profile()
     {
-        this.kweets.add(kweet);
+
     }
 
-    public List<Kweet> getKweets() {
+    public void addKweet(Kweet kweet)
+    {
+        this.kweets.put(kweet.getKweetId(),kweet);
+    }
+
+    public Map<Long,Kweet> getKweets() {
         return kweets;
     }
 
-    public void setKweets(List<Kweet> kweets) {
+    public void setKweets(Map<Long,Kweet> kweets) {
         this.kweets = kweets;
     }
 

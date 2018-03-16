@@ -16,6 +16,7 @@ public class JAXRSConfiguration extends Application {
         Set<Class<?>> classes = new HashSet<>();
         classes.add(PingResource.class);
         classes.add(ProfileResource.class);
+        classes.add(KweetResource.class);
         return classes;
     }
 }

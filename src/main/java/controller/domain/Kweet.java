@@ -1,10 +1,12 @@
 package controller.domain;
 
+import javax.xml.bind.annotation.XmlRootElement;
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+@XmlRootElement
 public class Kweet {
     private Long kweetId;
     private String owner;
@@ -14,7 +16,7 @@ public class Kweet {
     private List<String> mentions;
     private List<String> trends;
 
-    public Kweet(Long kweetId,String owner, String message, Date postDate, List<String> likes, List<String> mentions, List<String> trends) {
+    public Kweet(long kweetId,String owner, String message, Date postDate, List<String> likes, List<String> mentions, List<String> trends) {
         if (owner.isEmpty()) {
             throw new InvalidParameterException("username has to be entered");
         }
@@ -33,7 +35,12 @@ public class Kweet {
         this.trends = trends;
     }
 
-    public Kweet(Long Kweetid, String owner, String message, Date date) {
+    public Kweet()
+    {
+
+    }
+
+    public Kweet(long kweetId, String owner, String message, Date date) {
         if (owner.isEmpty()) {
             throw new InvalidParameterException("username has to be entered");
         }

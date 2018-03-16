@@ -5,10 +5,9 @@ import controller.domain.Profile;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.util.List;
 import java.util.Map;
 
@@ -40,5 +39,50 @@ public class ProfileResource {
     @Produces({"application/json"})
     public Profile getProfile(@PathParam("name") String name) throws Exception {
         return this.service.getMappedProfile(name);
+    }
+
+    @POST
+    @Path("profilePost")
+    @Produces({MediaType.APPLICATION_JSON, MediaType.TEXT_HTML})
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response addProfile(Profile profile)
+    {
+        Profile newProfile;
+        try
+        {
+            service.addProfile(profile);
+        }
+        catch (Exception e)
+        {
+            return Response.status(Response.Status.NOT_FOUND)
+                    .entity("User doesn't exists")
+                    .type(MediaType.TEXT_HTML)
+                    .build();
+        }
+
+        return Response.ok(profile)
+                .build();
+    }
+
+    @DELETE
+    @Path("profileDelete")
+    @Produces({MediaType.APPLICATION_JSON, MediaType.TEXT_HTML})
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response deleteProfile(Profile profile)
+    {
+        try
+        {
+            service.deleteProfile(profile);
+        }
+        catch (Exception e)
+        {
+            return Response.status(Response.Status.NOT_FOUND)
+                    .entity("User doesn't exists")
+                    .type(MediaType.TEXT_HTML)
+                    .build();
+        }
+
+        return Response.ok(profile.getUsername())
+                .build();
     }
 }

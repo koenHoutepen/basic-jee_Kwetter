@@ -25,6 +25,8 @@ public class KweetService {
         return this.kweetDao.getAllKweets();
     }
 
+    public List<Kweet> getKweetList(){return this.kweetDao.getKweetList();}
+
     public void deleteKweet(Long id)
     {
         this.kweetDao.deleteKweet(id);

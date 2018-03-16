@@ -2,6 +2,7 @@ package Services;
 
 import controller.domain.Kweet;
 import controller.domain.Profile;
+import dao.KweetDao;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
@@ -9,12 +10,16 @@ import javax.ejb.Startup;
 import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @Singleton
 @Startup
 public class StartUp {
     @Inject
-    private ProfileService service;
+    private ProfileService profileService;
+    private KweetService kweetService;
+    private KweetDao kweetDao;
 
     public StartUp()
     {
@@ -22,12 +27,21 @@ public class StartUp {
     }
 
     @PostConstruct
-    public void createData()
-    {
-        ArrayList<Kweet> kweets = new ArrayList<Kweet>();
-        kweets.add(new Kweet(new Long(1), "bobby","eerste kweet", new Date()));
-        kweets.add(new Kweet(new Long(2), "bobby","tweede kweet", new Date()));
-        kweets.add(new Kweet(new Long(3), "bobby","derde kweet", new Date()));
-        this.service.addProfile(new Profile("Bobby", "Ik ben een test Gebruiker","Tilburg","www.waarombenikzo.com", kweets, new ArrayList<>(), new ArrayList<>(),"niethier.jpg"));
+    public void createData(){
+        try {
+            Profile bobby = new Profile("Bobby", "Ik ben een test Gebruiker", "Tilburg", "www.waarombenikzo.com", new HashMap<>(), new ArrayList<>(), new ArrayList<>(), "niethier.jpg");
+            this.profileService.addProfile(bobby);
+            Kweet kweet1 = new Kweet(new Long(0l), bobby.getUsername(), "eerste kweet", new Date());
+            Kweet kweet2 = new Kweet(new Long(0l), bobby.getUsername(), "tweede kweet", new Date());
+            Kweet kweet3 = new Kweet(new Long(0l), bobby.getUsername(), "derde kweet", new Date());
+            this.profileService.addKweet(kweet1, bobby);
+            this.profileService.addKweet(kweet2, bobby);
+            this.profileService.addKweet(kweet3, bobby);
+        }
+        catch (Exception e)
+        {
+            System.out.println("create profile ging mis");
+            System.out.println(e.getMessage());
+        }
     }
 }

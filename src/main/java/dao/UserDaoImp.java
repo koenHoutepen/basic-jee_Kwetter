@@ -17,14 +17,14 @@ import java.util.concurrent.ConcurrentHashMap;
 @Default
 public class UserDaoImp implements UserDao
 {
-    private Map<String,Profile> mappedprofiles;
+    private Map<String,Profile> mappedProfiles;
     private List<Profile> profiles;
 
     @PostConstruct
     public void init()
     {
         profiles = new ArrayList<>();
-        mappedprofiles = new ConcurrentHashMap<>();
+        mappedProfiles = new ConcurrentHashMap<>();
     }
 
     @Override
@@ -35,13 +35,13 @@ public class UserDaoImp implements UserDao
 
     @Override
     public Map<String, Profile> getMappedProfiles() {
-        return mappedprofiles;
+        return mappedProfiles;
     }
 
     @Override
     public Profile getMappedProfile(String username) throws Exception {
-        if(mappedprofiles.containsKey(username)) {
-            return mappedprofiles.get(username);
+        if(mappedProfiles.containsKey(username)) {
+            return mappedProfiles.get(username);
         }
         throw new Exception("User" + username + "does not exist or could not be found");
     }
@@ -65,16 +65,30 @@ public class UserDaoImp implements UserDao
 
     @Override
     public void addProfile(Profile profile) {
-        this.profiles.add(profile);
+        this.mappedProfiles.put(profile.getUsername(),profile);
+    }
+
+    @Override
+    public void deleteProfile(String username) throws Exception {
+        if(mappedProfiles.containsKey(username)) {
+            mappedProfiles.remove(username);
+        }
+        throw new Exception("User" + username + "does not exist or could not be found");
     }
 
     @Override
     public void addKweets(Kweet kweet, Profile profile) throws Exception {
-        this.getProfile(profile.getUsername()).addKweet(kweet);
+        try {
+            profile.addKweet(kweet);
+        }
+        catch(Exception e)
+        {
+            System.out.println("Userdao addkweets gaat fout: " + e.getMessage());
+        }
     }
 
     @Override
-    public List<Kweet> getKweets(Profile profile) {
-        return new ArrayList<>(profile.getKweets());
+    public Map<Long,Kweet> getKweets(Profile profile) {
+        return profile.getKweets();
     }
 }
