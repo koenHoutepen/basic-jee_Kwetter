@@ -1,13 +1,16 @@
 package controller.domain;
 
+import javax.persistence.Entity;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.io.Serializable;
 import java.security.InvalidParameterException;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+@Entity
 @XmlRootElement
-public class Profile {
+public class Profile implements Serializable{
     private String username;
     private String bio;
     private String location;

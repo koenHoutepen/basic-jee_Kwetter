@@ -1,13 +1,16 @@
 package controller.domain;
 
+import javax.persistence.Entity;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.io.Serializable;
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @XmlRootElement
-public class Kweet {
+@Entity
+public class Kweet implements Serializable{
     private Long kweetId;
     private String owner;
     private String message;

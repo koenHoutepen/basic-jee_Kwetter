@@ -1,7 +1,9 @@
 package controller.domain;
 
+import javax.persistence.Entity;
 import java.util.List;
 
+@Entity
 public class Trend {
     private String trendName;
     private Kweet originKweet;

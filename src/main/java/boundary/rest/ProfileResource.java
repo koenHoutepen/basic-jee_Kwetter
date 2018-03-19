@@ -23,7 +23,6 @@ public class ProfileResource {
     }
 
     @GET
-    @Path("/map")
     public Map<String , Profile> getCompleteMap()
     {
        return this.service.getProfileMap();
@@ -37,7 +36,6 @@ public class ProfileResource {
     }
 
     @POST
-    @Path("/profilePost")
     @Produces({MediaType.APPLICATION_JSON, MediaType.TEXT_HTML})
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addProfile(Profile profile)

@@ -7,7 +7,6 @@ import controller.domain.Profile;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Default;
-import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -15,7 +14,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @ApplicationScoped
 @Default
-public class UserDaoImp implements UserDao
+public class ProfileDaoImp implements ProfileDao
 {
     private Map<String,Profile> mappedProfiles;
     private List<Profile> profiles;
