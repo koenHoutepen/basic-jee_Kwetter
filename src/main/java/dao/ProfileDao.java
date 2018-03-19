@@ -23,11 +23,15 @@ public interface ProfileDao
 
     void setRole(String userName);
 
-    void addProfile(Profile profile);
+    void addProfile(Profile profile) throws Exception;
+
+    Profile createProfile(String username);
 
     void deleteProfile(String username) throws Exception;
 
     void addKweets(Kweet kweet, Profile profile) throws Exception;
+
+    Profile editProfile(Profile profile) throws Exception;
 
     Map<Long,Kweet> getKweets(Profile profile);
 }

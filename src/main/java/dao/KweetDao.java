@@ -9,15 +9,15 @@ public interface KweetDao {
 
     Kweet createKweet(Kweet kweet) throws Exception;
     
-    Kweet editKweet(Long id, String author, String title);
+    Kweet editKweet(Long id,String Message) throws Exception;
     
-    void deleteKweet(Long id);
+    void deleteKweet(Long id) throws Exception;
 
     Map<Long,Kweet> getAllKweets();
 
     List<Kweet> getKweetList();
 
-    Kweet getKweet(Long id);
+    Kweet getKweet(Long id) throws Exception;
 
     List<Kweet> get10UserKweets(String Username);
 

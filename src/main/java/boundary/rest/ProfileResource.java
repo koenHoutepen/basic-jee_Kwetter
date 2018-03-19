@@ -32,7 +32,8 @@ public class ProfileResource {
     @Path("/{name}")
     @Produces({"application/json"})
     public Profile getProfile(@PathParam("name") String name) throws Exception {
-        return this.service.getMappedProfile(name);
+        //return this.service.getMappedProfile(name);
+        return this.service.getProfile(name);
     }
 
     @POST
@@ -40,7 +41,6 @@ public class ProfileResource {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addProfile(Profile profile)
     {
-        Profile newProfile;
         try
         {
             service.addProfile(profile);

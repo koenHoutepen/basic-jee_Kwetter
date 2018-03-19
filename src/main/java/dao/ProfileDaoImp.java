@@ -63,8 +63,19 @@ public class ProfileDaoImp implements ProfileDao
     }
 
     @Override
-    public void addProfile(Profile profile) {
-        this.mappedProfiles.put(profile.getUsername(),profile);
+    public void addProfile(Profile profile) throws Exception {
+        if(this.mappedProfiles.containsKey(profile.getUsername()))
+        {
+            throw new Exception("Username already exists");
+        }
+        else{
+            this.mappedProfiles.put(profile.getUsername(),profile);
+        }
+    }
+
+    @Override
+    public Profile createProfile(String username) {
+        return null;
     }
 
     @Override
@@ -84,6 +95,11 @@ public class ProfileDaoImp implements ProfileDao
         {
             System.out.println("Userdao addkweets gaat fout: " + e.getMessage());
         }
+    }
+
+    @Override
+    public Profile editProfile(Profile profile) {
+        return null;
     }
 
     @Override

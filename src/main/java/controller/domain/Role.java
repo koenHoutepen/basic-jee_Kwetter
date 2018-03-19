@@ -2,7 +2,7 @@ package controller.domain;
 
 import javax.persistence.Entity;
 
-@Entity
+//@Entity
 public class Role {
     private boolean canDelete;
     private boolean canPost;

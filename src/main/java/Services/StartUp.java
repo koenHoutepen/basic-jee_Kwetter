@@ -31,9 +31,9 @@ public class StartUp {
         try {
             Profile bobby = new Profile("Bobby", "Ik ben een test Gebruiker", "Tilburg", "www.waarombenikzo.com", new HashMap<>(), new ArrayList<>(), new ArrayList<>(), "niethier.jpg");
             this.profileService.addProfile(bobby);
-            Kweet kweet1 = new Kweet(new Long(0l), bobby.getUsername(), "eerste kweet", new Date());
-            Kweet kweet2 = new Kweet(new Long(0l), bobby.getUsername(), "tweede kweet", new Date());
-            Kweet kweet3 = new Kweet(new Long(0l), bobby.getUsername(), "derde kweet", new Date());
+            Kweet kweet1 = new Kweet(new Long(0l), bobby, "eerste kweet", new Date());
+            Kweet kweet2 = new Kweet(new Long(0l), bobby, "tweede kweet", new Date());
+            Kweet kweet3 = new Kweet(new Long(0l), bobby, "derde kweet", new Date());
             this.profileService.addKweet(kweet1, bobby);
             this.profileService.addKweet(kweet2, bobby);
             this.profileService.addKweet(kweet3, bobby);

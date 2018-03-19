@@ -3,7 +3,7 @@ package controller.domain;
 import javax.persistence.Entity;
 import java.util.List;
 
-@Entity
+//@Entity
 public class Trend {
     private String trendName;
     private Kweet originKweet;

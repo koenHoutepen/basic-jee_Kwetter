@@ -65,16 +65,15 @@ public class KweetDaoImp implements KweetDao {
     }
 
     @Override
-    public Kweet editKweet(Long id, String author, String message) {
-        if (author == null || message == null) {
-            throw new IllegalArgumentException("Author, Title or Content is null");
+    public Kweet editKweet(Long id,String message) {
+        if (message == null) {
+            throw new IllegalArgumentException("Content is null");
         }
         if (!kweets.containsKey(id)) {
             throw new IllegalArgumentException("Id not found: " + id);
         }
 
         Kweet k = kweets.get(id);
-        k.setOwner(author);
         k.setMessage(message);
 
         return k;

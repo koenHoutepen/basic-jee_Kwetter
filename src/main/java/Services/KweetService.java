@@ -1,6 +1,7 @@
 package Services;
 
 import controller.domain.Kweet;
+import dao.JPA;
 import dao.KweetDao;
 
 import javax.ejb.Stateless;
@@ -11,6 +12,7 @@ import java.util.Map;
 @Stateless
 public class KweetService {
     @Inject
+    @JPA
     private KweetDao kweetDao;
 
     public Kweet getKweet(Long id)throws Exception
@@ -25,8 +27,7 @@ public class KweetService {
 
     public List<Kweet> getKweetList(){return this.kweetDao.getKweetList();}
 
-    public void deleteKweet(Long id)
-    {
+    public void deleteKweet(Long id) throws Exception {
         this.kweetDao.deleteKweet(id);
     }
 }

@@ -1,7 +1,10 @@
 package controller.domain;
 
-import javax.persistence.Entity;
+import javax.persistence.*;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import java.io.Serializable;
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
@@ -9,18 +12,32 @@ import java.util.Date;
 import java.util.List;
 
 @XmlRootElement
-@Entity
+@XmlAccessorType(XmlAccessType.FIELD)
+@Entity(name = "Kweet")
+@Table(name = "kweet")
+@NamedQueries({@NamedQuery(name = "kweet.getKweets", query = "SELECT K FROM Kweet K"), @NamedQuery(name = "kweet.getKweetsFromUser", query = "SELECT k FROM Kweet k where k.owner = :owner")})
 public class Kweet implements Serializable{
-    private Long kweetId;
-    private String owner;
-    private String message;
-    private Date postDate;
-    private List<String> likes;
-    private List<String> mentions;
-    private List<String> trends;
 
-    public Kweet(long kweetId,String owner, String message, Date postDate, List<String> likes, List<String> mentions, List<String> trends) {
-        if (owner.isEmpty()) {
+    @Id
+    @GeneratedValue()
+    private Long kweetId;
+
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @XmlTransient
+    private Profile owner;
+
+    private String message;
+
+    private Date postDate;
+
+    //private List<String> likes;
+
+    //private List<String> mentions;
+
+   // private List<String> trends;
+
+    public Kweet(long kweetId,Profile owner, String message, Date postDate, List<String> likes, List<String> mentions, List<String> trends) {
+        if (owner == null) {
             throw new InvalidParameterException("username has to be entered");
         }
         if (message.isEmpty() || message.length() > 140) {
@@ -33,9 +50,9 @@ public class Kweet implements Serializable{
         this.owner = owner;
         this.message = message;
         this.postDate = postDate;
-        this.likes = likes;
-        this.mentions = mentions;
-        this.trends = trends;
+//        this.likes = likes;
+//        this.mentions = mentions;
+//        this.trends = trends;
     }
 
     public Kweet()
@@ -43,8 +60,8 @@ public class Kweet implements Serializable{
 
     }
 
-    public Kweet(long kweetId, String owner, String message, Date date) {
-        if (owner.isEmpty()) {
+    public Kweet(long kweetId, Profile owner, String message, Date date) {
+        if (owner == null) {
             throw new InvalidParameterException("username has to be entered");
         }
         if (message.isEmpty() || message.length() > 140) {
@@ -55,16 +72,16 @@ public class Kweet implements Serializable{
         this.owner = owner;
         this.message = message;
         this.postDate = date;
-        this.likes = new ArrayList<>();
-        this.mentions = new ArrayList<>();
-        this.trends = new ArrayList<>();
+        //this.likes = new ArrayList<>();
+        //this.mentions = new ArrayList<>();
+        //this.trends = new ArrayList<>();
     }
 
-    public String getOwner() {
+    public Profile getOwner() {
         return owner;
     }
 
-    public void setOwner(String owner) {
+    public void setOwner(Profile owner) {
         this.owner = owner;
     }
 
@@ -84,29 +101,29 @@ public class Kweet implements Serializable{
         this.postDate = postDate;
     }
 
-    public List<String> getLikes() {
-        return likes;
-    }
-
-    public void setLikes(List<String> likes) {
-        this.likes = likes;
-    }
-
-    public List<String> getMentions() {
-        return mentions;
-    }
-
-    public void setMentions(List<String> mentions) {
-        this.mentions = mentions;
-    }
-
-    public List<String> getTrends() {
-        return trends;
-    }
-
-    public void setTrends(List<String> trends) {
-        this.trends = trends;
-    }
+//    public List<String> getLikes() {
+//        return likes;
+//    }
+//
+//    public void setLikes(List<String> likes) {
+//        this.likes = likes;
+//    }
+//
+//    public List<String> getMentions() {
+//        return mentions;
+//    }
+//
+//    public void setMentions(List<String> mentions) {
+//        this.mentions = mentions;
+//    }
+//
+//    public List<String> getTrends() {
+//        return trends;
+//    }
+//
+//    public void setTrends(List<String> trends) {
+//        this.trends = trends;
+//    }
 
     public Long getKweetId() {
         return kweetId;

@@ -2,7 +2,7 @@ package controller.domain;
 
 import javax.persistence.Entity;
 
-@Entity
+//@Entity
 public class Mention {
     private Profile profile;
     private Kweet containingKweet;
