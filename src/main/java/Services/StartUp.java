@@ -29,7 +29,7 @@ public class StartUp {
     @PostConstruct
     public void createData(){
         try {
-            Profile bobby = new Profile("Bobby", "Ik ben een test Gebruiker", "Tilburg", "www.waarombenikzo.com", new HashMap<>(), new ArrayList<>(), new ArrayList<>(), "niethier.jpg");
+            Profile bobby = new Profile("Bobby", "Ik ben een test Gebruiker", "Tilburg", "www.waarombenikzo.com", new ArrayList<>(), new Profile(), new ArrayList<>(), "niethier.jpg");
             this.profileService.addProfile(bobby);
             Kweet kweet1 = new Kweet(new Long(0l), bobby, "eerste kweet", new Date());
             Kweet kweet2 = new Kweet(new Long(0l), bobby, "tweede kweet", new Date());

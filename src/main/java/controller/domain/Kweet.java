@@ -22,19 +22,13 @@ public class Kweet implements Serializable{
     @GeneratedValue()
     private Long kweetId;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.PERSIST , fetch = FetchType.LAZY)
     @XmlTransient
     private Profile owner;
 
     private String message;
 
     private Date postDate;
-
-    //private List<String> likes;
-
-    //private List<String> mentions;
-
-   // private List<String> trends;
 
     public Kweet(long kweetId,Profile owner, String message, Date postDate, List<String> likes, List<String> mentions, List<String> trends) {
         if (owner == null) {
@@ -50,9 +44,6 @@ public class Kweet implements Serializable{
         this.owner = owner;
         this.message = message;
         this.postDate = postDate;
-//        this.likes = likes;
-//        this.mentions = mentions;
-//        this.trends = trends;
     }
 
     public Kweet()
@@ -72,11 +63,9 @@ public class Kweet implements Serializable{
         this.owner = owner;
         this.message = message;
         this.postDate = date;
-        //this.likes = new ArrayList<>();
-        //this.mentions = new ArrayList<>();
-        //this.trends = new ArrayList<>();
     }
 
+    @XmlTransient
     public Profile getOwner() {
         return owner;
     }
@@ -100,30 +89,6 @@ public class Kweet implements Serializable{
     public void setPostDate(Date postDate) {
         this.postDate = postDate;
     }
-
-//    public List<String> getLikes() {
-//        return likes;
-//    }
-//
-//    public void setLikes(List<String> likes) {
-//        this.likes = likes;
-//    }
-//
-//    public List<String> getMentions() {
-//        return mentions;
-//    }
-//
-//    public void setMentions(List<String> mentions) {
-//        this.mentions = mentions;
-//    }
-//
-//    public List<String> getTrends() {
-//        return trends;
-//    }
-//
-//    public void setTrends(List<String> trends) {
-//        this.trends = trends;
-//    }
 
     public Long getKweetId() {
         return kweetId;

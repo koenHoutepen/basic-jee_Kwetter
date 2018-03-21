@@ -22,7 +22,7 @@ import java.util.concurrent.atomic.AtomicLong;
 public class KweetDaoImp implements KweetDao {
 
     //private static KweetDaoImp instance = null;
-    private Map<Long, Kweet> kweets;
+    private List<Kweet> kweets;
     private AtomicLong nextId;
 
 
@@ -40,7 +40,7 @@ public class KweetDaoImp implements KweetDao {
 
     @PostConstruct
     public void initKwetter() {
-        kweets = new ConcurrentHashMap<>();
+        kweets = new ArrayList<>();
         nextId = new AtomicLong(0);
 
         //createKweet(new Kweet(new Long(0),"de kweetmeister","welkom bij kwetter" ,new Date()));
@@ -55,7 +55,7 @@ public class KweetDaoImp implements KweetDao {
         }
         try {
             kweet.setKweetId(nextId.getAndIncrement());
-            kweets.put(kweet.getKweetId(), kweet);
+            //kweets.put(kweet.getKweetId(), kweet);
             return kweet;
         }
         catch (Exception e)
@@ -64,24 +64,28 @@ public class KweetDaoImp implements KweetDao {
         }
     }
 
+    @Deprecated
     @Override
     public Kweet editKweet(Long id,String message) {
         if (message == null) {
             throw new IllegalArgumentException("Content is null");
         }
-        if (!kweets.containsKey(id)) {
-            throw new IllegalArgumentException("Id not found: " + id);
-        }
+//        if (!kweets.containsKey(id)) {
+//            throw new IllegalArgumentException("Id not found: " + id);
+//        }
 
-        Kweet k = kweets.get(id);
-        k.setMessage(message);
-
-        return k;
+//        Kweet k = kweets.get(kweets.indexOf(id));
+//        k.setMessage(message);
+//
+//        return k;
+        return null;
     }
 
+    @Deprecated
     @Override
     public void deleteKweet(Long id) {
-        if (!kweets.containsKey(id)) {
+        Kweet kweet = kweets.get(kweets.indexOf(kweets));
+        if (!kweets.contains(id)) {
             throw new IllegalArgumentException("Id not found: " + id);
         }
 
@@ -89,14 +93,14 @@ public class KweetDaoImp implements KweetDao {
     }
 
     @Override
-    public Map<Long,Kweet> getAllKweets() {
+    public List<Kweet> getAllKweets() {
         return kweets;
     }
 
     @Override
     public List<Kweet> getKweetList()
     {
-        return new ArrayList<>(kweets.values());
+        return kweets;
     }
 
     @Override
@@ -108,9 +112,9 @@ public class KweetDaoImp implements KweetDao {
     public List<Kweet> get10UserKweets(String username) {
         List<Kweet> list = new ArrayList<>();
         int limit = 10;
-        for (Map.Entry<Long, Kweet> longKweetEntry : kweets.entrySet()) {
-            if (longKweetEntry.getValue().getOwner().equals(username)) {
-                Kweet value = longKweetEntry.getValue();
+        for (Kweet longKweetEntry : kweets) {
+            if (longKweetEntry.getOwner().getUsername().equals(username)) {
+                Kweet value = longKweetEntry;
                 if (limit-- == 0) break;
                 list.add(value);
             }

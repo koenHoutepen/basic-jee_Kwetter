@@ -103,7 +103,7 @@ public class ProfileDaoImp implements ProfileDao
     }
 
     @Override
-    public Map<Long,Kweet> getKweets(Profile profile) {
+    public List<Kweet> getKweets(Profile profile) {
         return profile.getKweets();
     }
 }

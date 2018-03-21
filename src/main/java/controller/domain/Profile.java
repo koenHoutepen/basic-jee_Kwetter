@@ -1,5 +1,6 @@
 package controller.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -10,6 +11,7 @@ import java.security.InvalidParameterException;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+
 
 
 @XmlRootElement
@@ -25,19 +27,23 @@ public class Profile implements Serializable{
     private String location;
     private String web;
 
-    @OneToMany(mappedBy = "owner")
+    @OneToMany(mappedBy = "owner" , fetch = FetchType.LAZY)
     @XmlTransient
-    private Map<Long,Kweet> kweets;
+    @JsonIgnore
+    private List<Kweet> kweets;
 
-   // private List<String> followers;
+    @ManyToOne(cascade = CascadeType.PERSIST , fetch = FetchType.LAZY)
+    @JoinColumn(name = "follow_id")
+    private Profile followed;
 
-    //private List<String> following;
+    @OneToMany(mappedBy = "followed",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @XmlTransient
+    @JsonIgnore
+    private List<Profile> following;
 
     private String profilePicturePath;
 
-    //private KwetterManager kwetterManager = new KwetterManager();
-
-    public Profile(String username, String bio, String location, String web, Map<Long,Kweet> kweets, List<String> followers, List<String> following, String profilePicturePath) {
+    public Profile(String username, String bio, String location, String web, List<Kweet> kweets, Profile followed, List<Profile> following, String profilePicturePath) {
         if (username.isEmpty())
         {
             throw new InvalidParameterException("username was empty or already taken");
@@ -54,8 +60,8 @@ public class Profile implements Serializable{
         this.location = location;
         this.web = web;
         this.kweets = kweets;
-        //this.followers = followers;
-        //this.following = following;
+        this.followed = followed;
+        this.following = following;
         this.profilePicturePath = profilePicturePath;
     }
 
@@ -70,14 +76,15 @@ public class Profile implements Serializable{
     }
     public void addKweet(Kweet kweet)
     {
-        this.kweets.put(kweet.getKweetId(),kweet);
+        this.kweets.add(kweet);
     }
 
-    public Map<Long,Kweet> getKweets() {
+    @XmlTransient
+    public List<Kweet> getKweets() {
         return kweets;
     }
 
-    public void setKweets(Map<Long,Kweet> kweets) {
+    public void setKweets(List<Kweet> kweets) {
         this.kweets = kweets;
     }
 
@@ -113,21 +120,21 @@ public class Profile implements Serializable{
         this.web = web;
     }
 
-//    public List<String> getFollowers() {
-//        return followers;
-//    }
-//
-//    public void setFollowers(List<String> followers) {
-//        this.followers = followers;
-//    }
-//
-//    public List<String> getFollowing() {
-//        return following;
-//    }
-//
-//    public void setFollowing(List<String> following) {
-//        this.following = following;
-//    }
+    public Profile getFollowers() {
+        return followed;
+    }
+
+    public void setFollowed(Profile followed) {
+        this.followed = followed;
+    }
+
+    public List<Profile> getFollowing() {
+        return following;
+    }
+
+    public void setFollowing(List<Profile> following) {
+        this.following = following;
+    }
 
     public String getProfilePicturePath() {
         return profilePicturePath;

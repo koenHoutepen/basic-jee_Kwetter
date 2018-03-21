@@ -17,12 +17,13 @@ public class ProfileResource {
     ProfileService service;
 
     @GET
-    @Path("/list")
+
     public List<Profile> getAll() {
         return this.service.getProfiles();
     }
 
     @GET
+    @Path("/Map")
     public Map<String , Profile> getCompleteMap()
     {
        return this.service.getProfileMap();
@@ -80,7 +81,7 @@ public class ProfileResource {
 //    }
 
     @DELETE
-    @Path("/profileDelete/{username}")
+    @Path("/{username}")
     @Produces({MediaType.APPLICATION_JSON, MediaType.TEXT_HTML})
     public Response deleteProfileByUsername(@PathParam("username") String username) {
         try

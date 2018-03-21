@@ -20,12 +20,12 @@ public class KweetResource {
     ProfileService profileService;
 
     @GET
-    public Map<Long, Kweet> getCompleteMap() {
+    @Path("/map")
+    public List<Kweet> getCompleteMap() {
         return this.service.getKweetMap();
     }
 
     @GET
-    @Path("/list")
     public List<Kweet> getCompleteList() {
         return this.service.getKweetList();
     }
@@ -38,7 +38,6 @@ public class KweetResource {
     }
 
     @POST
-    @Path("/kweetPost")
     @Produces({MediaType.APPLICATION_JSON, MediaType.TEXT_HTML})
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addKweet(Kweet kweet) {
@@ -76,7 +75,7 @@ public class KweetResource {
 //    }
 
     @DELETE
-    @Path("/kweetDelete/{id}")
+    @Path("/{id}")
     @Produces({MediaType.APPLICATION_JSON, MediaType.TEXT_HTML})
     public Response deleteKweetById(@PathParam("id") Long id) {
         try {

@@ -13,7 +13,7 @@ public interface KweetDao {
     
     void deleteKweet(Long id) throws Exception;
 
-    Map<Long,Kweet> getAllKweets();
+    List<Kweet> getAllKweets();
 
     List<Kweet> getKweetList();
 

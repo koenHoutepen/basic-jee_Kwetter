@@ -33,5 +33,5 @@ public interface ProfileDao
 
     Profile editProfile(Profile profile) throws Exception;
 
-    Map<Long,Kweet> getKweets(Profile profile);
+    List<Kweet> getKweets(Profile profile);
 }

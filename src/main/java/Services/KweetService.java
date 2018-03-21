@@ -20,7 +20,7 @@ public class KweetService {
         return this.kweetDao.getKweet(id);
     }
 
-    public Map<Long,Kweet> getKweetMap()
+    public List<Kweet> getKweetMap()
     {
         return this.kweetDao.getAllKweets();
     }

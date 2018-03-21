@@ -36,7 +36,7 @@ public class ProfileDaoJPAImp implements ProfileDao {
     public Profile getProfile(String userName) throws Exception {
         try
         {
-            return entityManager.createQuery("SELECT p FROM Profile p WHERE p.username = :username", Profile.class)
+            return entityManager.createQuery("SELECT profile FROM Profile profile WHERE profile.username = :username", Profile.class)
                     .setParameter("username", userName)
                     .getSingleResult();
         }
@@ -102,7 +102,7 @@ public class ProfileDaoJPAImp implements ProfileDao {
     }
 
     @Override
-    public Map<Long, Kweet> getKweets(Profile profile) {
+    public List<Kweet> getKweets(Profile profile) {
         return null;
     }
 }

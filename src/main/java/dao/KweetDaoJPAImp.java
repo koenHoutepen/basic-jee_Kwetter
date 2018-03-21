@@ -18,7 +18,7 @@ import java.util.concurrent.atomic.AtomicLong;
 @Stateless
 @JPA
 public class KweetDaoJPAImp implements KweetDao{
-    private Map<Long, Kweet> kweets;
+    private List<Kweet> kweets;
     private AtomicLong nextId;
 
 
@@ -27,7 +27,7 @@ public class KweetDaoJPAImp implements KweetDao{
 
     @PostConstruct
     public void initKwetter() {
-        kweets = new ConcurrentHashMap<>();
+        kweets = new ArrayList<>();
         nextId = new AtomicLong(0);
     }
 
@@ -40,7 +40,7 @@ public class KweetDaoJPAImp implements KweetDao{
         catch(Exception e)
         {
             kweet.setKweetId(nextId.getAndIncrement());
-            kweets.put(kweet.getKweetId(), kweet);
+            kweets.add(kweet);
 
             return kweet;
         }
@@ -54,7 +54,6 @@ public class KweetDaoJPAImp implements KweetDao{
             Kweet newKweet = getKweet(id);
             newKweet.setMessage(message);
             entityManager.merge(newKweet);
-            kweets.replace(newKweet.getKweetId(),newKweet);
             return newKweet;
         }
         catch(Exception e)
@@ -71,7 +70,7 @@ public class KweetDaoJPAImp implements KweetDao{
     }
 
     @Override
-    public Map<Long, Kweet> getAllKweets() {
+    public List<Kweet> getAllKweets() {
         return null;
     }
 
