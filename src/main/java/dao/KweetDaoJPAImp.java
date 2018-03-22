@@ -44,7 +44,7 @@ public class KweetDaoJPAImp implements KweetDao{
 
             return kweet;
         }
-        throw new Exception("Dat ging niet zoals gepland in userdaojpa");
+        throw new Exception("dat ging fout");
     }
 
     @Override

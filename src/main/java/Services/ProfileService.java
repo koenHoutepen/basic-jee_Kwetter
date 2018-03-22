@@ -42,8 +42,8 @@ public class ProfileService {
 
     public void addProfile(Profile profile) throws Exception
     {
-        //this.profileDao.addProfile(profile);
-        this.profileDao.createProfile(profile.getUsername());
+        this.profileDao.addProfile(profile);
+        //this.profileDao.createProfile(profile.getUsername());
 
     }
 
@@ -51,6 +51,6 @@ public class ProfileService {
 
     public void addKweet(Kweet kweet, Profile profile) throws Exception
     {
-        this.profileDao.addKweets(this.kweetDao.createKweet(kweet),profile);
+        this.profileDao.addKweets(kweet,profile);
     }
 }

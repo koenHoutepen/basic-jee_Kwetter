@@ -32,18 +32,20 @@ public class Profile implements Serializable{
     @JsonIgnore
     private List<Kweet> kweets;
 
-    @ManyToOne(cascade = CascadeType.PERSIST , fetch = FetchType.LAZY)
-    @JoinColumn(name = "follow_id")
-    private Profile followed;
+    @ManyToMany
+    // @ManyToMany(cascade = CascadeType.PERSIST , fetch = FetchType.LAZY)
+    //@JoinColumn(name = "follower_username")
+    private List<Profile> followers;
 
-    @OneToMany(mappedBy = "followed",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @XmlTransient
-    @JsonIgnore
+    @ManyToMany
+    //@ManyToMany(mappedBy = "followers",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    //@XmlTransient
+    //@JsonIgnore
     private List<Profile> following;
 
     private String profilePicturePath;
 
-    public Profile(String username, String bio, String location, String web, List<Kweet> kweets, Profile followed, List<Profile> following, String profilePicturePath) {
+    public Profile(String username, String bio, String location, String web, List<Kweet> kweets, List<Profile> followers, List<Profile> following, String profilePicturePath) {
         if (username.isEmpty())
         {
             throw new InvalidParameterException("username was empty or already taken");
@@ -60,7 +62,7 @@ public class Profile implements Serializable{
         this.location = location;
         this.web = web;
         this.kweets = kweets;
-        this.followed = followed;
+        this.followers = followers;
         this.following = following;
         this.profilePicturePath = profilePicturePath;
     }
@@ -74,12 +76,14 @@ public class Profile implements Serializable{
     {
         this.username = username;
     }
+
     public void addKweet(Kweet kweet)
     {
         this.kweets.add(kweet);
     }
 
     @XmlTransient
+    @JsonIgnore
     public List<Kweet> getKweets() {
         return kweets;
     }
@@ -120,12 +124,12 @@ public class Profile implements Serializable{
         this.web = web;
     }
 
-    public Profile getFollowers() {
-        return followed;
+    public List<Profile> getFollowers() {
+        return followers;
     }
 
-    public void setFollowed(Profile followed) {
-        this.followed = followed;
+    public void setFollowed(List<Profile> followers) {
+        this.followers = followers;
     }
 
     public List<Profile> getFollowing() {
@@ -157,7 +161,6 @@ public class Profile implements Serializable{
                 //Objects.equals(followers, profile.followers) &&
                 //Objects.equals(following, profile.following) &&
                 Objects.equals(profilePicturePath, profile.profilePicturePath);
-                //&& Objects.equals(kwetterManager, profile.kwetterManager);
     }
 
     @Override

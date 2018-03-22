@@ -8,6 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.xml.registry.infomodel.User;
+import java.security.InvalidParameterException;
 import java.util.List;
 import java.util.Map;
 
@@ -54,7 +55,14 @@ public class ProfileDaoJPAImp implements ProfileDao {
 
     @Override
     public void addProfile(Profile profile) {
-
+        try
+        {
+            getProfile(profile.getUsername());
+            throw new InvalidParameterException("username already exists");
+        } catch (Exception e) {
+            Profile persistProfile = profile;
+            entityManager.persist(persistProfile);
+        }
 
     }
 
@@ -88,7 +96,8 @@ public class ProfileDaoJPAImp implements ProfileDao {
         }
         catch(Exception e)
         {
-            System.out.println("Userdao addkweets gaat fout: " + e.getMessage());
+            System.out.println("profiledao addkweets gaat fout: " + e.getMessage() + ". kweet : " + kweet.getKweetId().toString() + " "+ kweet.getMessage() + " "
+                    + kweet.getOwner().getUsername().toString() + ". profile " + profile.getUsername());
         }
     }
 

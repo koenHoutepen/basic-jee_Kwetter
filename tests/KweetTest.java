@@ -26,12 +26,12 @@ class KweetTest {
     {
         Profile testProfile = new Profile("daan");
         Executable nameForgotten = () -> {
-            Kweet baseKweet = new Kweet(new Long(01),null, "vette shit bro", new Date(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
+            Kweet baseKweet = new Kweet(null, "vette shit bro");
         };
 
         assertThrows(InvalidParameterException.class, nameForgotten, "name forgotten");
         Executable tooLongMessage = () -> {
-            Kweet baseKweet = new Kweet(new Long(01),testProfile, "vette shit broabcdehjfshlfkjsdhljgslkjfdhgfjsdhflkjfhdslkjhflskdjhfljshdljfhlksjdhlkfjhsdljhflkjshdlkfjgsdhgfkdshagkafhdgskdhfbvbviauhegreguatehagshtgshdhfkdshgfakdhgdkjhsadgfkadshgkfhgsdkjhgfskfdkjhsdgkfhgbrugrursydgrsgfrskygfdskyfgrskdhrgfksdhgfdkjgruygfrskuygrkgfrygrskuygrfkuygfskyrgfsygfysgfygfkysdhgsdfhgshgfkjsgrkurgkfdgksjfkjgdfgdkhfgrksdgdrkugrekfukfudrgkrugdrsughrkgrdsgdkusdrlg", new Date(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
+            Kweet baseKweet = new Kweet(testProfile, "vette shit broabcdehjfshlfkjsdhljgslkjfdhgfjsdhflkjfhdslkjhflskdjhfljshdljfhlksjdhlkfjhsdljhflkjshdlkfjgsdhgfkdshagkafhdgskdhfbvbviauhegreguatehagshtgshdhfkdshgfakdhgdkjhsadgfkadshgkfhgsdkjhgfskfdkjhsdgkfhgbrugrursydgrsgfrskygfdskyfgrskdhrgfksdhgfdkjgruygfrskuygrkgfrygrskuygrfkuygfskyrgfsygfysgfygfkysdhgsdfhgshgfkjsgrkurgkfdgksjfkjgdfgdkhfgrksdgdrkugrekfukfudrgkrugdrsughrkgrdsgdkusdrlg");
         };
 
         assertThrows(InvalidParameterException.class, tooLongMessage, "message too long");

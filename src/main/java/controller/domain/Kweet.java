@@ -30,16 +30,14 @@ public class Kweet implements Serializable{
 
     private Date postDate;
 
-    public Kweet(long kweetId,Profile owner, String message, Date postDate, List<String> likes, List<String> mentions, List<String> trends) {
+    public Kweet(long kweetId,Profile owner, String message, Date postDate) {
         if (owner == null) {
             throw new InvalidParameterException("username has to be entered");
         }
         if (message.isEmpty() || message.length() > 140) {
             throw new InvalidParameterException("message is invalid");
         }
-        if(mentions == null || trends == null || likes == null){
-            throw new InvalidParameterException("Kweet creation failed");
-        }
+
         this.kweetId = kweetId;
         this.owner = owner;
         this.message = message;
@@ -51,18 +49,16 @@ public class Kweet implements Serializable{
 
     }
 
-    public Kweet(long kweetId, Profile owner, String message, Date date) {
+    public Kweet(Profile owner, String message) {
         if (owner == null) {
             throw new InvalidParameterException("username has to be entered");
         }
         if (message.isEmpty() || message.length() > 140) {
             throw new InvalidParameterException("message is invalid");
         }
-
-        this.kweetId = kweetId;
+        this.postDate = new Date();
         this.owner = owner;
         this.message = message;
-        this.postDate = date;
     }
 
     @XmlTransient
