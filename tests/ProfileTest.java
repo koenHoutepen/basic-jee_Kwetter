@@ -15,7 +15,7 @@ class ProfileTest {
     }
 
     @Test
-    void profileCreate()
+    void profile()
     {
 
     }

@@ -1,5 +1,6 @@
 import controller.domain.Kweet;
 import controller.domain.Profile;
+import exceptions.IdOrNameEmptyException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,16 +23,16 @@ class KweetTest {
     }
 
     @Test
-    void Kweet()
-    {
+    void Kweet() throws IdOrNameEmptyException {
         Profile testProfile = new Profile("daan");
-        Executable nameForgotten = () -> {
+        Executable kweetOwnerNameForgotten = () -> {
             Kweet baseKweet = new Kweet(null, "vette shit bro");
         };
 
-        assertThrows(InvalidParameterException.class, nameForgotten, "name forgotten");
+        assertThrows(IdOrNameEmptyException.class, kweetOwnerNameForgotten, "name forgotten");
         Executable tooLongMessage = () -> {
-            Kweet baseKweet = new Kweet(testProfile, "vette shit broabcdehjfshlfkjsdhljgslkjfdhgfjsdhflkjfhdslkjhflskdjhfljshdljfhlksjdhlkfjhsdljhflkjshdlkfjgsdhgfkdshagkafhdgskdhfbvbviauhegreguatehagshtgshdhfkdshgfakdhgdkjhsadgfkadshgkfhgsdkjhgfskfdkjhsdgkfhgbrugrursydgrsgfrskygfdskyfgrskdhrgfksdhgfdkjgruygfrskuygrkgfrygrskuygrfkuygfskyrgfsygfysgfygfkysdhgsdfhgshgfkjsgrkurgkfdgksjfkjgdfgdkhfgrksdgdrkugrekfukfudrgkrugdrsughrkgrdsgdkusdrlg");
+            Kweet baseKweet = new Kweet(testProfile,
+                    "vette shit broabcdehjfshlfkjsdhljgslkjfdhgfjsdhflkjfhdslkjhflskdjhfljshdljfhlksjdhlkfjhsdljhflkjshdlkfjgsdhgfkdshagkafhdgskdhfbvbviauhegreguatehagshtgshdhfkdshgfakdhgdkjhsadgfkadshgkfhgsdkjhgfskfdkjhsdgkfhgbrugrursydgrsgfrskygfdskyfgrskdhrgfksdhgfdkjgruygfrskuygrkgfrygrskuygrfkuygfskyrgfsygfysgfygfkysdhgsdfhgshgfkjsgrkurgkfdgksjfkjgdfgdkhfgrksdgdrkugrekfukfudrgkrugdrsughrkgrdsgdkusdrlg");
         };
 
         assertThrows(InvalidParameterException.class, tooLongMessage, "message too long");
