@@ -53,4 +53,9 @@ public class ProfileService {
     {
         this.profileDao.addKweets(kweet,profile);
     }
+
+    public void addFollow(Profile followed, Profile follower)
+    {
+        this.profileDao.addFollow(followed,follower);
+    }
 }

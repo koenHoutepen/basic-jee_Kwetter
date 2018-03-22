@@ -22,12 +22,12 @@ public class ProfileResource {
         return this.service.getProfiles();
     }
 
-    @GET
-    @Path("/Map")
-    public Map<String , Profile> getCompleteMap()
-    {
-       return this.service.getProfileMap();
-    }
+//    @GET
+//    @Path("/Map")
+//    public Map<String , Profile> getCompleteMap()
+//    {
+//       return this.service.getProfileMap();
+//    }
 
     @GET
     @Path("/{name}")

@@ -19,11 +19,11 @@ public class KweetResource {
     @Inject
     ProfileService profileService;
 
-    @GET
-    @Path("/map")
-    public List<Kweet> getCompleteMap() {
-        return this.service.getKweetMap();
-    }
+//    @GET
+//    @Path("/map")
+//    public List<Kweet> getCompleteMap() {
+//        return this.service.getKweetMap();
+//    }
 
     @GET
     public List<Kweet> getCompleteList() {
@@ -43,7 +43,7 @@ public class KweetResource {
     public Response addKweet(Kweet kweet) {
 
         try {
-            profileService.addKweet(kweet, profileService.getMappedProfile(kweet.getOwner().getUsername()));
+            profileService.addKweet(kweet, profileService.getProfile(kweet.getOwner().getUsername()));
         } catch (Exception e) {
             return Response.status(Response.Status.NOT_FOUND)
                     .entity("User doesn't exists")
