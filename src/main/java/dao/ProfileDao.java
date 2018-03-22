@@ -3,6 +3,7 @@ package dao;
 
 import controller.domain.Kweet;
 import controller.domain.Profile;
+import exceptions.IdOrNameEmptyException;
 import org.omg.CosNaming.NamingContextPackage.NotFound;
 
 import java.security.InvalidParameterException;
@@ -25,11 +26,13 @@ public interface ProfileDao
 
     void addProfile(Profile profile) throws Exception;
 
-    Profile createProfile(String username);
+    Profile createProfile(String username) throws IdOrNameEmptyException;
 
     void deleteProfile(String username) throws Exception;
 
     void addKweets(Kweet kweet, Profile profile) throws Exception;
+
+    void addFollow(Profile followed, Profile follower);
 
     Profile editProfile(Profile profile) throws Exception;
 

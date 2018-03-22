@@ -1,6 +1,8 @@
 package controller.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import exceptions.IdOrNameEmptyException;
+
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -8,6 +10,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import java.io.Serializable;
 import java.security.InvalidParameterException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -27,28 +30,29 @@ public class Profile implements Serializable{
     private String location;
     private String web;
 
-    @OneToMany(mappedBy = "owner" , fetch = FetchType.LAZY)
+//    @OneToMany(mappedBy = "owner" , fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.PERSIST)
     @XmlTransient
     @JsonIgnore
-    private List<Kweet> kweets;
+    private List<Kweet> kweets = new ArrayList<>();
 
     @ManyToMany
     // @ManyToMany(cascade = CascadeType.PERSIST , fetch = FetchType.LAZY)
     //@JoinColumn(name = "follower_username")
-    private List<Profile> followers;
+    private List<Profile> followers = new ArrayList<>();
 
     @ManyToMany
     //@ManyToMany(mappedBy = "followers",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     //@XmlTransient
     //@JsonIgnore
-    private List<Profile> following;
+    private List<Profile> following = new ArrayList<>();
 
     private String profilePicturePath;
 
-    public Profile(String username, String bio, String location, String web, List<Kweet> kweets, List<Profile> followers, List<Profile> following, String profilePicturePath) {
+    public Profile(String username, String bio, String location, String web, List<Kweet> kweets, List<Profile> followers, List<Profile> following, String profilePicturePath) throws IdOrNameEmptyException {
         if (username.isEmpty())
         {
-            throw new InvalidParameterException("username was empty or already taken");
+            throw new IdOrNameEmptyException("username was empty or already taken");
         }
         if (bio.length() > 160) {
             throw new InvalidParameterException("Bio is too long");
@@ -72,9 +76,13 @@ public class Profile implements Serializable{
 
     }
 
-    public Profile(String username)
-    {
+    public Profile(String username) throws IdOrNameEmptyException {
+        if (username.isEmpty())
+        {
+            throw new IdOrNameEmptyException("username was empty");
+        }
         this.username = username;
+
     }
 
     public void addKweet(Kweet kweet)
@@ -124,14 +132,20 @@ public class Profile implements Serializable{
         this.web = web;
     }
 
+    @XmlTransient
+    @JsonIgnore
     public List<Profile> getFollowers() {
         return followers;
     }
 
-    public void setFollowed(List<Profile> followers) {
+    public void setFollowers(List<Profile> followers) {
         this.followers = followers;
     }
 
+    public void addFollower(Profile follower){this.followers.add(follower);}
+
+    @XmlTransient
+    @JsonIgnore
     public List<Profile> getFollowing() {
         return following;
     }
@@ -139,6 +153,8 @@ public class Profile implements Serializable{
     public void setFollowing(List<Profile> following) {
         this.following = following;
     }
+
+    public void addFollowing(Profile followingProfile){this.following.add(followingProfile);}
 
     public String getProfilePicturePath() {
         return profilePicturePath;

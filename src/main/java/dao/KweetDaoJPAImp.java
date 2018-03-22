@@ -9,6 +9,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -36,15 +37,12 @@ public class KweetDaoJPAImp implements KweetDao{
         try
         {
             getKweet(kweet.getKweetId());
+            throw new InvalidParameterException("id already exists");
+        } catch (Exception e) {
+            Kweet persistKweet = kweet;
+            entityManager.persist(kweet);
+            return getKweet(kweet.getKweetId());
         }
-        catch(Exception e)
-        {
-            kweet.setKweetId(nextId.getAndIncrement());
-            kweets.add(kweet);
-
-            return kweet;
-        }
-        throw new Exception("dat ging fout");
     }
 
     @Override

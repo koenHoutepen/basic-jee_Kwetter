@@ -98,6 +98,11 @@ public class ProfileDaoImp implements ProfileDao
     }
 
     @Override
+    public void addFollow(Profile followed, Profile follower) {
+        //
+    }
+
+    @Override
     public Profile editProfile(Profile profile) {
         return null;
     }

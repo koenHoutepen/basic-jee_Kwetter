@@ -1,5 +1,8 @@
 package controller.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import exceptions.IdOrNameEmptyException;
+
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -22,7 +25,8 @@ public class Kweet implements Serializable{
     @GeneratedValue()
     private Long kweetId;
 
-    @ManyToOne(cascade = CascadeType.PERSIST , fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.PERSIST/* , fetch = FetchType.LAZY*/)
+    @JsonIgnore
     @XmlTransient
     private Profile owner;
 
@@ -49,9 +53,9 @@ public class Kweet implements Serializable{
 
     }
 
-    public Kweet(Profile owner, String message) {
+    public Kweet(Profile owner, String message) throws IdOrNameEmptyException {
         if (owner == null) {
-            throw new InvalidParameterException("username has to be entered");
+            throw new IdOrNameEmptyException("username has to be entered");
         }
         if (message.isEmpty() || message.length() > 140) {
             throw new InvalidParameterException("message is invalid");

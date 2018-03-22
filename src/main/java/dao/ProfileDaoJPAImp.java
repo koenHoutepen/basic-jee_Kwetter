@@ -2,6 +2,9 @@ package dao;
 
 import controller.domain.Kweet;
 import controller.domain.Profile;
+import exceptions.IdOrNameAlreadyTakenException;
+import exceptions.IdOrNameEmptyException;
+import exceptions.ProfileNotFoundException;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -44,7 +47,7 @@ public class ProfileDaoJPAImp implements ProfileDao {
         catch (NoResultException e)
         {
             System.out.println("User " + userName + " was not found");
-            throw new Exception("User " + userName + " was not found");
+            throw new ProfileNotFoundException("User " + userName + " was not found");
         }
     }
 
@@ -58,7 +61,7 @@ public class ProfileDaoJPAImp implements ProfileDao {
         try
         {
             getProfile(profile.getUsername());
-            throw new InvalidParameterException("username already exists");
+            throw new IdOrNameAlreadyTakenException("username already exists");
         } catch (Exception e) {
             Profile persistProfile = profile;
             entityManager.persist(persistProfile);
@@ -67,7 +70,7 @@ public class ProfileDaoJPAImp implements ProfileDao {
     }
 
     @Override
-    public Profile createProfile(String username) {
+    public Profile createProfile(String username) throws IdOrNameEmptyException {
         try
         {
             getProfile(username);
@@ -99,6 +102,14 @@ public class ProfileDaoJPAImp implements ProfileDao {
             System.out.println("profiledao addkweets gaat fout: " + e.getMessage() + ". kweet : " + kweet.getKweetId().toString() + " "+ kweet.getMessage() + " "
                     + kweet.getOwner().getUsername().toString() + ". profile " + profile.getUsername());
         }
+    }
+
+    @Override
+    public void addFollow(Profile followed, Profile follower) {
+        followed.addFollower(follower);
+        entityManager.merge(followed);
+        follower.addFollowing(followed);
+        entityManager.merge(follower);
     }
 
     @Override
